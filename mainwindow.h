@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QChartView>
+#include <QValueAxis>
 #include "mymath.h"
 
 QT_BEGIN_NAMESPACE
@@ -20,6 +21,7 @@ public:
 private:
     void setupChart();
     void setupModel();
+    void setupAxis(const QList<QtCharts::QAbstractAxis*>& chartAxis, const QList<QtCharts::QAbstractAxis*> modelAxis);
 
 public slots:
     void click_result();

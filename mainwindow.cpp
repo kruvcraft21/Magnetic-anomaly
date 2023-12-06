@@ -40,6 +40,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::setupAxis(const QList<QtCharts::QAbstractAxis *> &chartAxis, const QList<QtCharts::QAbstractAxis *> modelAxis)
+{
+    modelAxis.at(0)->setRange(-MAX_RANGE, MAX_RANGE);
+    auto* modelVerticalAxis = static_cast<QtCharts::QValueAxis*>(modelAxis.at(1));
+    modelVerticalAxis->setReverse(true);
+    modelVerticalAxis->setRange(0, MAX_RANGE);
+    auto modelMaxY = QString::number(modelVerticalAxis->max());
+
+    auto* chartVerticalAxis = static_cast<QtCharts::QValueAxis*>(chartAxis.at(1));
+    auto chartMaxY = QString::number(chartVerticalAxis->max());
+}
+
 void MainWindow::click_result()
 {
     MathParametrs param{0.f, 0.f, 0.f, 0.f};
@@ -59,7 +71,8 @@ void MainWindow::click_result()
             new QtCharts::QSplineSeries,
             new QtCharts::QSplineSeries
         };
-        if (mymath.getLinesSeries(lines, param))
+        auto* modelLine = new QtCharts::QLineSeries;
+        if (mymath.getLinesSeries(lines, param) && mymath.getModelLine(modelLine, param))
         {
             chartView->chart()->removeAllSeries();
             chartView->chart()->addSeries(lines.H);
@@ -67,22 +80,14 @@ void MainWindow::click_result()
             chartView->chart()->addSeries(lines.T);
             chartView->chart()->createDefaultAxes();
 
-            const float maxY = param.h * 3;
             modelView->chart()->removeAllSeries();
-            auto* line = new QtCharts::QLineSeries;
-            line->setName("Конут пласта");
-            line->append(-param.b, maxY);
-            line->append(-param.b, maxY - param.h);
-            line->append(param.b, maxY - param.h);
-            line->append(param.b, maxY);
-            modelView->chart()->addSeries(line);
+            modelView->chart()->addSeries(modelLine);
             modelView->chart()->createDefaultAxes();
-            modelView->chart()->axes().at(0)->setRange(-MAX_RANGE, MAX_RANGE);
-            modelView->chart()->axes().at(1)->setReverse(true);
-            modelView->chart()->axes().at(1)->setRange(0, maxY);
+            this->setupAxis(chartView->chart()->axes(), modelView->chart()->axes());
         }
         else
         {
+            delete modelLine;
             delete lines.H;
             delete lines.Z;
             delete lines.T;

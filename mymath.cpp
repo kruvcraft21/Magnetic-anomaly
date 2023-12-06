@@ -26,6 +26,23 @@ bool Math::getLinesSeries(Lines& lines, const MathParametrs& parametrs) const no
     }
 }
 
+bool Math::getModelLine(QtCharts::QLineSeries* line, const MathParametrs &parametrs) const noexcept
+{
+    try
+    {
+        line->setName("Конут пласта");
+        line->append(-parametrs.b, MAX_RANGE);
+        line->append(-parametrs.b, parametrs.h);
+        line->append(parametrs.b, parametrs.h);
+        line->append(parametrs.b, MAX_RANGE);
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        return false;
+    }
+}
+
 Math& Math::getInstance()
 {
     static Math math;

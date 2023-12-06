@@ -2,6 +2,7 @@
 #define MYMATH_H
 
 #include <QSplineSeries>
+#include <QLineSeries>
 #include <math.h>
 #include <string>
 
@@ -33,6 +34,7 @@ private:
     Math operator=(const Math&&) = delete;
 public:
     bool getLinesSeries(Lines& lines, const MathParametrs& parametrs) const noexcept;
+    bool getModelLine(QtCharts::QLineSeries* line, const MathParametrs& parametrs) const noexcept;
     static Math& getInstance();
 
 public:
