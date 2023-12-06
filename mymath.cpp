@@ -30,7 +30,7 @@ bool Math::getModelLine(QtCharts::QLineSeries* line, const MathParametrs &parame
 {
     try
     {
-        line->setName("Конут пласта");
+        line->setName("Контур пласта");
         line->append(-parametrs.b, MAX_RANGE);
         line->append(-parametrs.b, parametrs.h);
         line->append(parametrs.b, parametrs.h);
