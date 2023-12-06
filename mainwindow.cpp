@@ -23,7 +23,7 @@ void MainWindow::setupChart()
     chartView->setMaximumSize(700, 400);
     this->ui->graphicsLayout->addWidget(chartView);
     chartView->chart()->setTitle("График математической модели");
-    chartView->chart()->setToolTip("H - fgdfg\nZ - sdf\nT - sfdg");
+    chartView->chart()->setToolTip("H - горизонтальная составляющая\nZ - вертикальная составляющая\nT - полный вектор напряжонности");
 }
 
 void MainWindow::setupModel()
