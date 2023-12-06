@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Вычисление магнитной аномалии</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resurces.qrc">
+    <normaloff>:/icon/mainIcon</normaloff>:/icon/mainIcon</iconset>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -166,6 +170,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resurces.qrc"/>
+ </resources>
  <connections/>
 </ui>
