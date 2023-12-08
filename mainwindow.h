@@ -21,7 +21,7 @@ public:
 private:
     void setupChart();
     void setupModel();
-    void setupAxis(const QList<QtCharts::QAbstractAxis*>& chartAxis, const QList<QtCharts::QAbstractAxis*> modelAxis);
+    void setupAxis(const QList<QtCharts::QAbstractAxis*>& chartAxis, const QList<QtCharts::QAbstractAxis*>& modelAxis);
 
 public slots:
     void click_result();

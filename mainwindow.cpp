@@ -40,7 +40,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setupAxis(const QList<QtCharts::QAbstractAxis *> &chartAxis, const QList<QtCharts::QAbstractAxis *> modelAxis)
+void MainWindow::setupAxis(const QList<QtCharts::QAbstractAxis *> &chartAxis, const QList<QtCharts::QAbstractAxis *>& modelAxis)
 {
     modelAxis.at(0)->setRange(-MAX_RANGE, MAX_RANGE);
     auto* modelVerticalAxis = static_cast<QtCharts::QValueAxis*>(modelAxis.at(1));
