@@ -40,29 +40,66 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setupAxis(const QList<QtCharts::QAbstractAxis *> &chartAxis, const QList<QtCharts::QAbstractAxis *>& modelAxis)
+void removeAllAxes(QtCharts::QChart* chart)
 {
-    modelAxis.at(0)->setRange(-MAX_RANGE, MAX_RANGE);
-    auto* modelVerticalAxis = static_cast<QtCharts::QValueAxis*>(modelAxis.at(1));
-    modelVerticalAxis->setReverse(true);
-    modelVerticalAxis->setRange(0, MAX_RANGE);
-    auto modelMaxY = QString::number(modelVerticalAxis->max());
+    const auto& axes = chart->axes();
+    for (auto* axis : axes)
+    {
+        chart->removeAxis(axis);
+    }
+}
 
-    auto* chartVerticalAxis = static_cast<QtCharts::QValueAxis*>(chartAxis.at(1));
-    auto chartMaxY = QString::number(chartVerticalAxis->max());
+void MainWindow::addAxes(const Axes& axes, QtCharts::QChart* chart)
+{
+    chart->addAxis(axes.x, Qt::AlignBottom);
+    chart->addAxis(axes.y, Qt::AlignLeft);
+    const auto& series = chart->series();
+    for (auto* s : series)
+    {
+        s->attachAxis(axes.x);
+        s->attachAxis(axes.y);
+    }
+}
+
+void MainWindow::createAxes(const MathParametrs &parametrs)
+{
+    removeAllAxes(chartView->chart());
+    removeAllAxes(modelView->chart());
+
+    Axes chartAxes
+    {
+        new QtCharts::QValueAxis(this),
+        new QtCharts::QValueAxis(this)
+    };
+    chartAxes.x->setRange(-parametrs.b * 5.f, parametrs.b * 5.f);
+    chartAxes.y->setRange(-parametrs.yMax, parametrs.yMax);
+    this->addAxes(chartAxes, chartView->chart());
+
+    Axes modelAxes
+    {
+        new QtCharts::QValueAxis(this),
+        new QtCharts::QValueAxis(this)
+    };
+    modelAxes.x->setRange(-parametrs.b * 5.f, parametrs.b * 5.f);
+    modelAxes.y->setRange(0, parametrs.h * 2);
+    modelAxes.y->setReverse(true);
+    this->addAxes(modelAxes, modelView->chart());
 }
 
 void MainWindow::click_result()
 {
-    MathParametrs param{0.f, 0.f, 0.f, 0.f};
     bool okh = true;
     bool okB = true;
     bool okb = true;
     bool okX = true;
-    param.b = this->ui->line_b->text().replace(',', '.').toFloat(&okb);
-    param.B = this->ui->line_B->text().replace(',', '.').toFloat(&okB);
-    param.h = this->ui->line_h->text().replace(',', '.').toFloat(&okh);
-    param.X = this->ui->line_X->text().replace(',', '.').toFloat(&okX);
+    MathParametrs param
+    {
+        this->ui->line_b->text().replace(',', '.').toFloat(&okb), // b
+        this->ui->line_B->text().replace(',', '.').toFloat(&okB), // B
+        this->ui->line_h->text().replace(',', '.').toFloat(&okh), // h
+        this->ui->line_X->text().replace(',', '.').toFloat(&okX), // X
+        0.f, // yMax
+    };
     if (okh && okb && okB && okX)
     {
         Lines lines
@@ -78,12 +115,11 @@ void MainWindow::click_result()
             chartView->chart()->addSeries(lines.H);
             chartView->chart()->addSeries(lines.Z);
             chartView->chart()->addSeries(lines.T);
-            chartView->chart()->createDefaultAxes();
 
             modelView->chart()->removeAllSeries();
             modelView->chart()->addSeries(modelLine);
-            modelView->chart()->createDefaultAxes();
-            this->setupAxis(chartView->chart()->axes(), modelView->chart()->axes());
+
+            this->createAxes(param);
         }
         else
         {

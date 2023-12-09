@@ -6,15 +6,15 @@
 #include <math.h>
 #include <string>
 
-constexpr float MAX_RANGE = 500.f;
-constexpr float STEP_RANGE = 50.f;
+constexpr int COUNT_STEP = 20;
 
 struct MathParametrs
 {
-    float b;
-    float B;
-    float h;
-    float X;
+    const float b;
+    const float B;
+    const float h;
+    const float X;
+    float yMax;
 };
 
 struct Lines
@@ -33,8 +33,8 @@ private:
     Math operator=(const Math&) = delete;
     Math operator=(const Math&&) = delete;
 public:
-    bool getLinesSeries(Lines& lines, const MathParametrs& parametrs) const noexcept;
-    bool getModelLine(QtCharts::QLineSeries* line, const MathParametrs& parametrs) const noexcept;
+    bool getLinesSeries(Lines& lines, MathParametrs& parametrs) const noexcept;
+    bool getModelLine(QtCharts::QLineSeries* line, MathParametrs& parametrs) const noexcept;
     static Math& getInstance();
 
 public:

@@ -10,6 +10,12 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+struct Axes
+{
+    QtCharts::QValueAxis* x;
+    QtCharts::QValueAxis* y;
+};
+
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -21,7 +27,8 @@ public:
 private:
     void setupChart();
     void setupModel();
-    void setupAxis(const QList<QtCharts::QAbstractAxis*>& chartAxis, const QList<QtCharts::QAbstractAxis*>& modelAxis);
+    void createAxes(const MathParametrs& parametrs);
+    void addAxes(const Axes& axes, QtCharts::QChart* chart);
 
 public slots:
     void click_result();
