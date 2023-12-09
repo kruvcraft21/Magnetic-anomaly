@@ -27,7 +27,7 @@ struct Lines
 class Math
 {
 private:
-    Math();
+    Math() = default;
     Math(const Math&&) = delete;
     Math(const Math&) = delete;
     Math operator=(const Math&) = delete;

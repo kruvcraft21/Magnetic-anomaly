@@ -48,8 +48,3 @@ Math& Math::getInstance()
     static Math math;
     return math;
 }
-
-Math::Math()
-{
-
-}
