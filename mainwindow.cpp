@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::setupChart()
 {
-    chartView = new QtCharts::QChartView;
+    chartView = new QtCharts::QChartView(this);
     chartView->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     chartView->setMaximumSize(700, 400);
     this->ui->graphicsLayout->addWidget(chartView);
@@ -28,16 +28,11 @@ void MainWindow::setupChart()
 
 void MainWindow::setupModel()
 {
-    modelView = new QtCharts::QChartView;
+    modelView = new QtCharts::QChartView(this);
     modelView->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     modelView->setMaximumSize(700, 400);
     this->ui->graphicsLayout->addWidget(modelView);
     modelView->chart()->setTitle("Модель вертикального пласта");
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
 }
 
 void removeAllAxes(QtCharts::QChart* chart)
@@ -48,6 +43,12 @@ void removeAllAxes(QtCharts::QChart* chart)
         chart->removeAxis(axis);
     }
 }
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
 
 void MainWindow::addAxes(const Axes& axes, QtCharts::QChart* chart)
 {
@@ -104,9 +105,9 @@ void MainWindow::click_result()
     {
         Lines lines
         {
-            new QtCharts::QSplineSeries,
-            new QtCharts::QSplineSeries,
-            new QtCharts::QSplineSeries
+            new QtCharts::QSplineSeries(this),
+            new QtCharts::QSplineSeries(this),
+            new QtCharts::QSplineSeries(this)
         };
         auto* modelLine = new QtCharts::QLineSeries;
         if (mymath.getLinesSeries(lines, param) && mymath.getModelLine(modelLine, param))
