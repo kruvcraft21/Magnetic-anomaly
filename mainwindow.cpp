@@ -4,6 +4,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent, Qt::WindowCloseButtonHint)
     , mymath(Math::getInstance())
+    , chartView(new QtCharts::QChartView(this))
+    , modelView(new QtCharts::QChartView(this))
     , ui(new Ui::MainWindow())
 {
     ui->setupUi(this);
@@ -18,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::setupChart()
 {
-    chartView = new QtCharts::QChartView(this);
     chartView->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     chartView->setMaximumSize(700, 400);
     this->ui->graphicsLayout->addWidget(chartView);
@@ -28,7 +29,6 @@ void MainWindow::setupChart()
 
 void MainWindow::setupModel()
 {
-    modelView = new QtCharts::QChartView(this);
     modelView->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     modelView->setMaximumSize(700, 400);
     this->ui->graphicsLayout->addWidget(modelView);
