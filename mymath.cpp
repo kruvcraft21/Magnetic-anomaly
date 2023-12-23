@@ -33,7 +33,7 @@ bool Math::getLinesSeries(Lines& lines, MathParametrs& parametrs) const noexcept
     }
 }
 
-bool Math::getModelLine(QtCharts::QLineSeries* line, MathParametrs &parametrs) const noexcept
+bool Math::getModelLine(QtCharts::QLineSeries* line, const MathParametrs &parametrs) const noexcept
 {
     try
     {
@@ -48,6 +48,11 @@ bool Math::getModelLine(QtCharts::QLineSeries* line, MathParametrs &parametrs) c
     {
         return false;
     }
+}
+
+std::string& Math::getLastError() const
+{
+    return lastError;
 }
 
 Math& Math::getInstance()

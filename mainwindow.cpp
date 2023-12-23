@@ -124,6 +124,7 @@ void MainWindow::click_result()
         }
         else
         {
+            qDebug() << mymath.getLastError().c_str();
             delete modelLine;
             delete lines.H;
             delete lines.Z;

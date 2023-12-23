@@ -32,12 +32,14 @@ private:
     Math(const Math&) = delete;
     Math operator=(const Math&) = delete;
     Math operator=(const Math&&) = delete;
-public:
-    bool getLinesSeries(Lines& lines, MathParametrs& parametrs) const noexcept;
-    bool getModelLine(QtCharts::QLineSeries* line, MathParametrs& parametrs) const noexcept;
-    static Math& getInstance();
 
 public:
+    bool getLinesSeries(Lines& lines, MathParametrs& parametrs) const noexcept;
+    bool getModelLine(QtCharts::QLineSeries* line, const MathParametrs& parametrs) const noexcept;
+    static Math& getInstance();
+    std::string& getLastError() const;
+
+private:
     mutable std::string lastError {""};
 };
 
