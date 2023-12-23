@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Вычисление магнитной аномалии</string>
+   <string>Вычисление магнитной аномалии вертикального пласта</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resurces.qrc">
