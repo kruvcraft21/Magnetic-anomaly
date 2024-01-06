@@ -21,9 +21,9 @@ bool Math::getLinesSeries(Lines& lines, MathParametrs& parametrs) const noexcept
             lines.Z->append(x, tmp_Z);
             lines.T->append(x, tmp_T);
         }
-        lines.H->setName("H");
-        lines.Z->setName("Z");
-        lines.T->setName("T");
+        lines.H->setName("H - горизонтальная составляющая");
+        lines.Z->setName("Z - вертикальная составляющая");
+        lines.T->setName("T - полный вектор напряжонности");
         return true;
     }
     catch (const std::exception& e)
