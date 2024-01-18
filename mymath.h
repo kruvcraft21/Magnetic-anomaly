@@ -7,6 +7,7 @@
 #include <string>
 
 constexpr int COUNT_STEP = 20;
+constexpr float tolerance = 0.001f;
 
 struct MathParametrs
 {
